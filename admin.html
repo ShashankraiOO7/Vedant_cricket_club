@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=1280, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1630" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/png" href="favicon-logo.png" />
@@ -149,43 +149,29 @@
 
           <section class="content-card admin-section-card">
             <p class="card-label">Gallery</p>
-            <h2>Google Drive Image Links</h2>
+            <h2>Gallery Sections</h2>
+            <p class="form-status">Each section supports up to 10 photos. Add one line per photo. To delete a photo, remove its line and save.</p>
             <div class="admin-results-grid">
               <div class="form-panel">
-                <p class="card-label">Gallery Item 1</p>
-                <label>Title<input id="gallery-0-title" type="text" /></label>
-                <label>Image URL<input id="gallery-0-image" type="text" placeholder="Google Drive direct image URL" /></label>
-                <label>Alt Text<input id="gallery-0-alt" type="text" /></label>
+                <p class="card-label">Gallery Section 1</p>
+                <label>Section Title<input id="gallery-section-0-title" type="text" placeholder="Training Gallery" /></label>
+                <label>Photo Titles<textarea id="gallery-section-0-item-titles" rows="6" placeholder="One photo title per line"></textarea></label>
+                <label>Photo Image URLs<textarea id="gallery-section-0-item-images" rows="6" placeholder="One Google Drive direct image URL per line"></textarea></label>
+                <label>Photo Alt Texts<textarea id="gallery-section-0-item-alts" rows="6" placeholder="One alt text per line"></textarea></label>
               </div>
               <div class="form-panel">
-                <p class="card-label">Gallery Item 2</p>
-                <label>Title<input id="gallery-1-title" type="text" /></label>
-                <label>Image URL<input id="gallery-1-image" type="text" placeholder="Google Drive direct image URL" /></label>
-                <label>Alt Text<input id="gallery-1-alt" type="text" /></label>
+                <p class="card-label">Gallery Section 2</p>
+                <label>Section Title<input id="gallery-section-1-title" type="text" placeholder="Match Day Gallery" /></label>
+                <label>Photo Titles<textarea id="gallery-section-1-item-titles" rows="6" placeholder="One photo title per line"></textarea></label>
+                <label>Photo Image URLs<textarea id="gallery-section-1-item-images" rows="6" placeholder="One Google Drive direct image URL per line"></textarea></label>
+                <label>Photo Alt Texts<textarea id="gallery-section-1-item-alts" rows="6" placeholder="One alt text per line"></textarea></label>
               </div>
               <div class="form-panel">
-                <p class="card-label">Gallery Item 3</p>
-                <label>Title<input id="gallery-2-title" type="text" /></label>
-                <label>Image URL<input id="gallery-2-image" type="text" placeholder="Google Drive direct image URL" /></label>
-                <label>Alt Text<input id="gallery-2-alt" type="text" /></label>
-              </div>
-              <div class="form-panel">
-                <p class="card-label">Gallery Item 4</p>
-                <label>Title<input id="gallery-3-title" type="text" /></label>
-                <label>Image URL<input id="gallery-3-image" type="text" placeholder="Google Drive direct image URL" /></label>
-                <label>Alt Text<input id="gallery-3-alt" type="text" /></label>
-              </div>
-              <div class="form-panel">
-                <p class="card-label">Gallery Item 5</p>
-                <label>Title<input id="gallery-4-title" type="text" /></label>
-                <label>Image URL<input id="gallery-4-image" type="text" placeholder="Google Drive direct image URL" /></label>
-                <label>Alt Text<input id="gallery-4-alt" type="text" /></label>
-              </div>
-              <div class="form-panel">
-                <p class="card-label">Gallery Item 6</p>
-                <label>Title<input id="gallery-5-title" type="text" /></label>
-                <label>Image URL<input id="gallery-5-image" type="text" placeholder="Google Drive direct image URL" /></label>
-                <label>Alt Text<input id="gallery-5-alt" type="text" /></label>
+                <p class="card-label">Gallery Section 3</p>
+                <label>Section Title<input id="gallery-section-2-title" type="text" placeholder="Event Gallery" /></label>
+                <label>Photo Titles<textarea id="gallery-section-2-item-titles" rows="6" placeholder="One photo title per line"></textarea></label>
+                <label>Photo Image URLs<textarea id="gallery-section-2-item-images" rows="6" placeholder="One Google Drive direct image URL per line"></textarea></label>
+                <label>Photo Alt Texts<textarea id="gallery-section-2-item-alts" rows="6" placeholder="One alt text per line"></textarea></label>
               </div>
             </div>
           </section>

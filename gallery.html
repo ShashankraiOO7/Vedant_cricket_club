@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=1280, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1630" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/png" href="favicon-logo.png" />
@@ -36,14 +36,29 @@
       </nav>
     </header>
     <main class="page-shell">
-      <section class="page-hero"><p class="eyebrow">Gallery</p><h1>Photos and highlights</h1><p>A separate gallery page keeps the visual content cleaner and easier to browse.</p></section>
-      <section class="gallery-grid">
-        <article class="media-box" data-gallery-item="0"><div class="media-overlay"><span>Match Day Highlights</span></div></article>
-        <article class="media-box" data-gallery-item="1"><div class="media-overlay"><span>Training Session</span></div></article>
-        <article class="media-box" data-gallery-item="2"><div class="media-overlay"><span>Academy Practice Nets</span></div></article>
-        <article class="media-box" data-gallery-item="3"><div class="media-overlay"><span>Awards and Trophies</span></div></article>
-        <article class="media-box" data-gallery-item="4"><div class="media-overlay"><span>Fitness and Conditioning</span></div></article>
-        <article class="media-box" data-gallery-item="5"><div class="media-overlay"><span>Team Celebration</span></div></article>
+      <section class="page-hero"><p class="eyebrow">Gallery</p><h1>Photos and highlights</h1><p>Open any section below to view gallery photos. Each section can hold up to 10 images.</p></section>
+      <section class="gallery-sections" id="gallery-sections">
+        <details class="gallery-section-card" data-gallery-section="0" open>
+          <summary>
+            <span class="gallery-section-label">Section 1</span>
+            <h2>Training Gallery</h2>
+          </summary>
+          <div class="gallery-section-grid" data-gallery-grid="0"></div>
+        </details>
+        <details class="gallery-section-card" data-gallery-section="1">
+          <summary>
+            <span class="gallery-section-label">Section 2</span>
+            <h2>Match Day Gallery</h2>
+          </summary>
+          <div class="gallery-section-grid" data-gallery-grid="1"></div>
+        </details>
+        <details class="gallery-section-card" data-gallery-section="2">
+          <summary>
+            <span class="gallery-section-label">Section 3</span>
+            <h2>Event Gallery</h2>
+          </summary>
+          <div class="gallery-section-grid" data-gallery-grid="2"></div>
+        </details>
       </section>
     </main>
     <footer class="site-footer"><p>Vedant Cricket Club • Gallery</p></footer>

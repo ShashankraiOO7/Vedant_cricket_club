@@ -73,13 +73,31 @@ const defaultContent = {
     youtubeUrl: "https://www.youtube.com/watch?v=AUzzBuQdz_I"
   },
   gallery: {
-    items: [
-      { title: "Match Day Highlights", image: "", alt: "Match Day Highlights" },
-      { title: "Training Session", image: "", alt: "Training Session" },
-      { title: "Academy Practice Nets", image: "", alt: "Academy Practice Nets" },
-      { title: "Awards and Trophies", image: "", alt: "Awards and Trophies" },
-      { title: "Fitness and Conditioning", image: "", alt: "Fitness and Conditioning" },
-      { title: "Team Celebration", image: "", alt: "Team Celebration" }
+    sections: [
+      {
+        title: "Training Gallery",
+        items: Array.from({ length: 10 }, (_, index) => ({
+          title: `Training Photo ${index + 1}`,
+          image: "",
+          alt: `Training Photo ${index + 1}`
+        }))
+      },
+      {
+        title: "Match Day Gallery",
+        items: Array.from({ length: 10 }, (_, index) => ({
+          title: `Match Day Photo ${index + 1}`,
+          image: "",
+          alt: `Match Day Photo ${index + 1}`
+        }))
+      },
+      {
+        title: "Event Gallery",
+        items: Array.from({ length: 10 }, (_, index) => ({
+          title: `Event Photo ${index + 1}`,
+          image: "",
+          alt: `Event Photo ${index + 1}`
+        }))
+      }
     ]
   },
   results: {
@@ -221,23 +239,36 @@ const renderResultHighlights = (highlights) => {
   });
 };
 
-const renderGallery = (items) => {
-  document.querySelectorAll("[data-gallery-item]").forEach((card, index) => {
-    const item = items[index];
-    if (!item) {
-      card.hidden = true;
+const renderGallery = (sections) => {
+  document.querySelectorAll("[data-gallery-section]").forEach((sectionNode, sectionIndex) => {
+    const section = sections[sectionIndex];
+    const heading = sectionNode.querySelector("h2");
+    const grid = sectionNode.querySelector(`[data-gallery-grid="${sectionIndex}"]`);
+    if (!section || !grid) {
+      sectionNode.hidden = true;
       return;
     }
-    const imageHtml = item.image
-      ? `<img class="gallery-photo" src="${item.image}" alt="${item.alt || item.title || "Gallery image"}" loading="lazy" />`
-      : "";
-    card.hidden = false;
-    card.innerHTML = `
-      ${imageHtml}
-      <div class="media-overlay">
-        <span>${item.title || "Gallery Item"}</span>
-      </div>
-    `;
+
+    sectionNode.hidden = false;
+    if (heading) {
+      heading.textContent = section.title || `Gallery Section ${sectionIndex + 1}`;
+    }
+
+    const validItems = (section.items || []).filter((item) => item && item.image);
+    grid.innerHTML = validItems.length
+      ? validItems
+          .map(
+            (item) => `
+              <article class="media-box">
+                <img class="gallery-photo" src="${item.image}" alt="${item.alt || item.title || "Gallery image"}" loading="lazy" />
+                <div class="media-overlay">
+                  <span>${item.title || "Gallery Photo"}</span>
+                </div>
+              </article>
+            `
+          )
+          .join("")
+      : `<div class="content-card gallery-empty-card"><p class="card-label">No Photos Yet</p><p>Add gallery image links from the admin panel to show photos in this section.</p></div>`;
   });
 };
 
@@ -307,7 +338,7 @@ const applyContent = (content) => {
   renderLive(content.live);
   renderResultsCards(content.results.matches);
   renderResultHighlights(content.results.highlights);
-  renderGallery(content.gallery.items);
+  renderGallery(content.gallery.sections);
 };
 
 const loginCard = document.querySelector("#admin-auth-card");
@@ -387,10 +418,11 @@ const fillAdminForm = (content) => {
     setValue(`#highlight-${index}-title`, item.title);
     setValue(`#highlight-${index}-points`, item.points.join("\n"));
   });
-  content.gallery.items.forEach((item, index) => {
-    setValue(`#gallery-${index}-title`, item.title);
-    setValue(`#gallery-${index}-image`, item.image);
-    setValue(`#gallery-${index}-alt`, item.alt);
+  content.gallery.sections.forEach((section, index) => {
+    setValue(`#gallery-section-${index}-title`, section.title);
+    setValue(`#gallery-section-${index}-item-titles`, (section.items || []).map((item) => item.title || "").join("\n"));
+    setValue(`#gallery-section-${index}-item-images`, (section.items || []).map((item) => item.image || "").join("\n"));
+    setValue(`#gallery-section-${index}-item-alts`, (section.items || []).map((item) => item.alt || "").join("\n"));
   });
 };
 
@@ -434,11 +466,20 @@ const collectAdminForm = () => ({
     youtubeUrl: valueOf("#admin-live-url")
   },
   gallery: {
-    items: Array.from({ length: 6 }, (_, index) => ({
-      title: valueOf(`#gallery-${index}-title`),
-      image: valueOf(`#gallery-${index}-image`),
-      alt: valueOf(`#gallery-${index}-alt`)
-    }))
+    sections: Array.from({ length: 3 }, (_, sectionIndex) => {
+      const titles = lines(`#gallery-section-${sectionIndex}-item-titles`).slice(0, 10);
+      const images = lines(`#gallery-section-${sectionIndex}-item-images`).slice(0, 10);
+      const alts = lines(`#gallery-section-${sectionIndex}-item-alts`).slice(0, 10);
+      const maxLength = Math.max(titles.length, images.length, alts.length);
+      return {
+        title: valueOf(`#gallery-section-${sectionIndex}-title`),
+        items: Array.from({ length: maxLength }, (_, itemIndex) => ({
+          title: titles[itemIndex] || `Gallery Photo ${itemIndex + 1}`,
+          image: images[itemIndex] || "",
+          alt: alts[itemIndex] || titles[itemIndex] || `Gallery Photo ${itemIndex + 1}`
+        })).filter((item) => item.image)
+      };
+    })
   },
   results: {
     matches: Array.from({ length: 3 }, (_, index) => ({

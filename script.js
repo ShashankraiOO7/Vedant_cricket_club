@@ -4,6 +4,15 @@ const atmosphere = document.querySelector("#sports-atmosphere");
 const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
 if (menuToggle && nav) {
+  menuToggle.setAttribute("aria-label", "Open menu");
+  menuToggle.innerHTML = `
+    <span class="menu-toggle-lines" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span class="menu-toggle-text">Menu</span>
+  `;
   menuToggle.addEventListener("click", () => {
     const isOpen = nav.classList.toggle("open");
     menuToggle.setAttribute("aria-expanded", String(isOpen));
