@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Players | Vedant Cricket Club</title>
+    <meta name="description" content="Vedant Cricket Club player profiles, ranking table, and player comparison dashboard for Mau cricket talent." />
+    <meta name="theme-color" content="#0b1630" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="favicon-logo.png" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="site-backdrop" aria-hidden="true">
+      <div class="backdrop-glow glow-one"></div>
+      <div class="backdrop-glow glow-two"></div>
+      <div class="backdrop-grid"></div>
+      <div id="sports-atmosphere" class="sports-atmosphere"></div>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-badge">VCC</span>
+        <span>
+          <strong>Vedant Cricket Club</strong>
+          <small>Nizamudinpura, Bhiti-Mau</small>
+        </span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="academy.html">Academy</a>
+        <a class="active" href="players.html">Players</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="live.html">Live</a>
+        <a href="results.html">Results</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+    <main class="page-shell">
+      <section class="page-hero">
+        <p class="eyebrow">Players</p>
+        <h1>Player profiles, stats, and achievements</h1>
+        <p>A dedicated player page showcasing performance, roles, recent form, and standout achievements.</p>
+      </section>
+
+      <section class="content-grid three">
+        <article class="content-card player-card">
+          <div class="player-avatar">AS</div>
+          <p class="card-label">Top Order Batter</p>
+          <h2>Aryan Singh</h2>
+          <ul class="bullet-list">
+            <li>Matches: 18</li>
+            <li>Runs: 428</li>
+            <li>Strike Rate: 134.6</li>
+            <li>Best Score: 86</li>
+          </ul>
+          <div class="player-achievement">Junior Talent Cup MVP</div>
+        </article>
+
+        <article class="content-card player-card">
+          <div class="player-avatar">SY</div>
+          <p class="card-label">Fast Bowler</p>
+          <h2>Shivam Yadav</h2>
+          <ul class="bullet-list">
+            <li>Matches: 16</li>
+            <li>Wickets: 24</li>
+            <li>Best Spell: 4/18</li>
+            <li>Economy: 5.4</li>
+          </ul>
+          <div class="player-achievement">Emerging Bowler Award</div>
+        </article>
+
+        <article class="content-card player-card">
+          <div class="player-avatar">RK</div>
+          <p class="card-label">All-Rounder</p>
+          <h2>R. Khan</h2>
+          <ul class="bullet-list">
+            <li>Matches: 15</li>
+            <li>Runs: 276</li>
+            <li>Wickets: 14</li>
+            <li>Best Performance: 55 runs, 2 wickets</li>
+          </ul>
+          <div class="player-achievement">Match Winner Recognition</div>
+        </article>
+      </section>
+
+      <section class="content-grid two">
+        <article class="content-card">
+          <p class="card-label">Performance Snapshot</p>
+          <h2>Current squad highlights</h2>
+          <ul class="bullet-list">
+            <li>Top batting impact from the academy core group</li>
+            <li>Balanced pace and all-round depth in the current squad</li>
+            <li>Regular match exposure through club tournaments and academy fixtures</li>
+          </ul>
+        </article>
+        <article class="content-card">
+          <p class="card-label">Achievements</p>
+          <h2>Visible player progress</h2>
+          <ul class="bullet-list">
+            <li>District-level selection opportunities</li>
+            <li>Strong local tournament performances</li>
+            <li>Recognition through Man of the Match and special awards</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <p class="eyebrow">Auto Rankings</p>
+          <h2>Top players by weighted performance score</h2>
+          <p>Ranking score is calculated from runs, wickets, strike rate, and economy balance.</p>
+        </div>
+        <div class="content-card">
+          <div class="ranking-head">
+            <span>Rank</span>
+            <span>Player</span>
+            <span>Role</span>
+            <span>Score</span>
+          </div>
+          <div id="ranking-list" class="ranking-list"></div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <p class="eyebrow">Comparison Tool</p>
+          <h2>Compare any two players</h2>
+          <p>Select two players to compare batting, bowling, and match impact side by side.</p>
+        </div>
+        <div class="content-grid two">
+          <article class="content-card">
+            <form id="player-compare-form" class="smart-form">
+              <label>Player A
+                <select id="player-a-select"></select>
+              </label>
+              <label>Player B
+                <select id="player-b-select"></select>
+              </label>
+              <button class="button primary" type="submit">Compare Players</button>
+            </form>
+            <p class="form-status" aria-live="polite"></p>
+          </article>
+          <article class="content-card">
+            <div id="compare-output" class="compare-output">
+              <p class="card-label">Comparison Preview</p>
+              <h3>Select players to view comparison</h3>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Vedant Cricket Club - Player Profiles</p></footer>
+    <script src="script.js"></script>
+  </body>
+</html>

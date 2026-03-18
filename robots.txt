@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vedantcricketclub.pages.dev/sitemap.xml
