@@ -2,9 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Tournaments | Vedant Cricket Club</title>
     <meta name="description" content="Upcoming Vedant Cricket Club tournaments, registration, rules, fixtures, countdown, and download files." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://vedantcricketclub.pages.dev/tournaments.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vedant Cricket Club" />
+    <meta property="og:title" content="Tournaments | Vedant Cricket Club" />
+    <meta property="og:description" content="View tournament fixtures, rules, prize money, registrations, countdown, and important downloads for Vedant Cricket Club." />
+    <meta property="og:url" content="https://vedantcricketclub.pages.dev/tournaments.html" />
+    <meta property="og:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tournaments | Vedant Cricket Club" />
+    <meta name="twitter:description" content="View tournament fixtures, rules, prize money, registrations, countdown, and important downloads for Vedant Cricket Club." />
+    <meta name="twitter:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
     <meta name="theme-color" content="#0b1630" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/png" href="favicon-logo.png" />
@@ -17,7 +29,7 @@
   <body class="tournaments-page">
     <div class="site-backdrop" aria-hidden="true"><div class="backdrop-glow glow-one"></div><div class="backdrop-glow glow-two"></div><div class="backdrop-grid"></div><div id="sports-atmosphere" class="sports-atmosphere"></div></div>
     <header class="site-header">
-      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong><small>Nizamudinpura, Bhiti-Mau</small></span></a>
+      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong></span></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav">
         <a href="index.html">Home</a><a href="academy.html">Academy</a><a class="active" href="tournaments.html">Tournaments</a><a href="live.html">Live</a><a href="results.html">Results</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
@@ -26,12 +38,12 @@
     <main class="page-shell">
       <section class="page-hero"><p class="eyebrow">Tournaments</p><h1>Events, rules, and fixtures</h1><p>A dedicated page for all tournament-related information.</p></section>
       <section class="content-grid two tournament-section">
-        <article class="content-card"><p class="card-label">Upcoming Events</p><h2>Current schedule</h2><ul class="bullet-list"><li>Summer Cricket Championship - 12 April 2026</li><li>Junior Talent Cup - 28 April 2026</li><li>Monsoon League Trials - 10 May 2026</li></ul></article>
+        <article class="content-card"><p class="card-label">Upcoming Events</p><h2>Current schedule</h2><ul class="bullet-list" id="tournament-events-list"><li>Summer Cricket Championship - 12 April 2026</li><li>Junior Talent Cup - 28 April 2026</li><li>Monsoon League Trials - 10 May 2026</li></ul></article>
         <article class="content-card"><p class="card-label">Rules & Regulations</p><h2>Match-day essentials</h2><ul class="bullet-list"><li>Valid registration required</li><li>Report 45 minutes before start</li><li>Umpire decisions are final</li><li>Proper kit and valid ID are mandatory</li></ul></article>
       </section>
       <section class="content-grid two tournament-section">
-        <article class="content-card"><p class="card-label">Prize Money</p><h2>Competition rewards</h2><ul class="bullet-list"><li>Winner: Rs. 51,000 + Trophy</li><li>Runner Up: Rs. 21,000 + Trophy</li><li>Best Batter Award</li><li>Best Bowler Award</li></ul></article>
-        <article class="content-card"><p class="card-label">Fixtures</p><h2>Upcoming matches</h2><ul class="bullet-list"><li>12 Apr: VCC XI vs Blasters Club</li><li>13 Apr: Rising Stars vs Warrior Boys</li><li>14 Apr: Junior Talent Showcase Match</li></ul></article>
+        <article class="content-card"><p class="card-label">Prize Money</p><h2>Competition rewards</h2><ul class="bullet-list" id="tournament-prizes-list"><li>Winner: Rs. 51,000 + Trophy</li><li>Runner Up: Rs. 21,000 + Trophy</li><li>Best Batter Award</li><li>Best Bowler Award</li></ul></article>
+        <article class="content-card"><p class="card-label">Fixtures</p><h2>Upcoming matches</h2><ul class="bullet-list" id="tournament-fixtures-list"><li>12 Apr: VCC XI vs Blasters Club</li><li>13 Apr: Rising Stars vs Warrior Boys</li><li>14 Apr: Junior Talent Showcase Match</li></ul></article>
       </section>
       <section class="content-grid two tournament-section">
         <article class="content-card">
@@ -61,8 +73,8 @@
       <section class="content-grid two tournament-section">
         <article class="content-card countdown-card">
           <p class="card-label">Countdown</p>
-          <h2>Summer Cricket Championship starts in</h2>
-          <div class="countdown-grid" data-countdown data-target-date="2026-04-12T08:00:00+05:30">
+          <h2 id="tournament-countdown-title">Summer Cricket Championship starts in</h2>
+          <div class="countdown-grid" data-countdown data-target-date="2026-04-12T08:00:00+05:30" id="tournament-countdown-grid">
             <div><strong data-time="days">00</strong><span>Days</span></div>
             <div><strong data-time="hours">00</strong><span>Hours</span></div>
             <div><strong data-time="minutes">00</strong><span>Minutes</span></div>
@@ -84,12 +96,12 @@
       <section class="content-grid two tournament-section">
         <article class="content-card">
           <p class="card-label">Tournament Downloads</p>
-          <h2>Files in Hindi + English</h2>
+          <h2>Download Tournament Files</h2>
           <div class="download-list">
-            <a class="button secondary" href="docs/tournament-rules.pdf" download>Download Rules PDF (Hindi + English)</a>
-            <a class="button secondary" href="docs/tournament-brochure.pdf" download>Download Brochure PDF (Hindi + English)</a>
-            <a class="button secondary" href="docs/fixtures-sheet.pdf" download>Download Fixtures Sheet PDF (Hindi + English)</a>
-            <a class="button secondary" href="docs/tournament-files-hi-en.md" download>Download Source Text (HI + EN)</a>
+            <a class="button secondary" id="download-rules-link" href="docs/tournament-rules.pdf" download>Download Rules PDF</a>
+            <a class="button secondary" id="download-brochure-link" href="docs/tournament-brochure.pdf" download>Download Brochure PDF (Hindi + English)</a>
+            <a class="button secondary" id="download-fixtures-link" href="docs/fixtures-sheet.pdf" download>Download Fixtures Sheet PDF (Hindi + English)</a>
+            <a class="button secondary" id="download-source-link" href="docs/registration-form.pdf" download>Download Registration Form PDF</a>
           </div>
         </article>
         <article class="content-card">
@@ -99,12 +111,13 @@
             <li>Rules PDF: eligibility, overs, discipline, protest process</li>
             <li>Brochure PDF: event intro, prize pool, venue and support contacts</li>
             <li>Fixtures PDF: match dates, slots, ground and reporting time</li>
-            <li>Source text file: bilingual ready-to-print content for all PDFs</li>
+            <li>Registration Form PDF: printable team entry sheet with captain and squad details</li>
           </ul>
         </article>
       </section>
     </main>
     <footer class="site-footer"><p>Vedant Cricket Club - Tournaments</p></footer>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script type="module" src="firebase-cms.js"></script>
   </body>
 </html>

@@ -14,6 +14,11 @@ const siteFooter = document.querySelector(".site-footer");
 
 if (siteFooter) {
   siteFooter.innerHTML = `
+    <div class="footer-water" aria-hidden="true">
+      <span class="footer-wave footer-wave-one"></span>
+      <span class="footer-wave footer-wave-two"></span>
+      <span class="footer-wave footer-wave-three"></span>
+    </div>
     <div class="footer-grid">
       <div>
         <div class="footer-brand-heading">
@@ -49,6 +54,7 @@ if (siteFooter) {
     </div>
     <div class="footer-bottom">
       <p>Vedant Cricket Club. All Rights Reserved.</p>
+      <p><a class="footer-admin-link" href="admin.html">Admin Login</a></p>
     </div>
   `;
 }
@@ -134,7 +140,510 @@ if (heroLocalVideo) {
   });
 }
 
-if (atmosphere) {
+const extractYouTubeVideoId = (url) => {
+  if (!url) {
+    return "";
+  }
+
+  const trimmed = url.trim();
+
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    const host = parsed.hostname.replace(/^www\./, "");
+
+    if (host === "youtu.be") {
+      return parsed.pathname.replace(/\//g, "").slice(0, 11);
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com" || host === "music.youtube.com") {
+      const watchId = parsed.searchParams.get("v");
+      if (watchId) {
+        return watchId.slice(0, 11);
+      }
+
+      const parts = parsed.pathname.split("/").filter(Boolean);
+      const liveIndex = parts.indexOf("live");
+      const embedIndex = parts.indexOf("embed");
+      const shortsIndex = parts.indexOf("shorts");
+
+      if (liveIndex !== -1 && parts[liveIndex + 1]) {
+        return parts[liveIndex + 1].slice(0, 11);
+      }
+
+      if (embedIndex !== -1 && parts[embedIndex + 1]) {
+        return parts[embedIndex + 1].slice(0, 11);
+      }
+
+      if (shortsIndex !== -1 && parts[shortsIndex + 1]) {
+        return parts[shortsIndex + 1].slice(0, 11);
+      }
+    }
+  } catch (_) {
+    return "";
+  }
+
+  return "";
+};
+
+const CMS_STORAGE_KEY = "vcc-site-content-v1";
+const ADMIN_SESSION_KEY = "vcc-admin-session-v1";
+const ADMIN_DEFAULTS = {
+  username: "vccadmin",
+  password: "vedant2026"
+};
+
+const defaultSiteContent = {
+  home: {
+    heroImage: "hero-founder.jpeg",
+    founder: {
+      label: "Founder Spotlight",
+      name: "Sundaram Dubey",
+      text: "A disciplined cricket vision focused on training intensity, player confidence, and tournament-ready preparation."
+    },
+    notices: [
+      "New academy admission batch is currently open",
+      "Junior Talent Cup entries close on 24 April 2026",
+      "Sunday fitness assessment remains compulsory for the open group"
+    ],
+    news: [
+      "Vedant Cricket Club announces Summer Cricket Championship 2026",
+      "Structured coaching model attracts new academy admissions",
+      "Top performers shortlisted for district-level opportunities"
+    ]
+  },
+  academy: {
+    training: {
+      morning: "5:30 AM - 8:00 AM",
+      evening: "4:00 PM - 7:00 PM",
+      special: "Sunday: match simulation and assessment"
+    }
+  },
+  tournaments: {
+    events: [
+      "Summer Cricket Championship - 12 April 2026",
+      "Junior Talent Cup - 28 April 2026",
+      "Monsoon League Trials - 10 May 2026"
+    ],
+    fixtures: [
+      "12 Apr: VCC XI vs Blasters Club",
+      "13 Apr: Rising Stars vs Warrior Boys",
+      "14 Apr: Junior Talent Showcase Match"
+    ],
+    prizes: [
+      "Winner: Rs. 51,000 + Trophy",
+      "Runner Up: Rs. 21,000 + Trophy",
+      "Best Batter Award",
+      "Best Bowler Award"
+    ],
+    countdownTitle: "Summer Cricket Championship starts in",
+    countdownDate: "2026-04-12T08:00:00+05:30",
+    downloads: {
+      rules: "docs/tournament-rules.pdf",
+      brochure: "docs/academy-brochure.pdf",
+      fixtures: "docs/fixtures-sheet.pdf",
+      source: "docs/registration-form.pdf"
+    }
+  },
+  live: {
+    title: "Watch Vedant Cricket Club Live",
+    youtubeUrl: "https://www.youtube.com/watch?v=AUzzBuQdz_I"
+  },
+  results: {
+    matches: [
+      {
+        label: "Match 1",
+        achievement: "VCC XI won by 27 runs",
+        title: "VCC XI vs Rising Stars",
+        scoreOne: "VCC XI: 168/6 (20 overs)",
+        scoreTwo: "Rising Stars: 141/9 (20 overs)",
+        topBatter: "Aryan Singh - 71 (39)",
+        topBowler: "Vikash Yadav - 3/24",
+        manOfMatch: "Aryan Singh"
+      },
+      {
+        label: "Match 2",
+        achievement: "VCC Juniors won by 5 wickets",
+        title: "VCC Juniors vs Warrior Boys",
+        scoreOne: "Warrior Boys: 122 all out (18.3 overs)",
+        scoreTwo: "VCC Juniors: 123/5 (17.4 overs)",
+        topBatter: "Shivam Yadav - 52* (36)",
+        topBowler: "Aditya Rai - 4/19",
+        manOfMatch: "Shivam Yadav"
+      },
+      {
+        label: "Match 3",
+        achievement: "Champion Club won by 12 runs",
+        title: "Academy Blues vs Champion Club",
+        scoreOne: "Champion Club: 154/8 (20 overs)",
+        scoreTwo: "Academy Blues: 142/9 (20 overs)",
+        topBatter: "R. Khan - 64 (44)",
+        topBowler: "N. Gupta - 3/21",
+        manOfMatch: "R. Khan"
+      }
+    ],
+    highlights: [
+      {
+        label: "Most Runs",
+        title: "Aryan Singh - 348",
+        points: ["Innings: 8", "Average: 49.7", "Strike Rate: 143.2"]
+      },
+      {
+        label: "Most Wickets",
+        title: "Aditya Rai - 17",
+        points: ["Matches: 8", "Economy: 6.1", "Best: 4/19"]
+      }
+    ]
+  }
+};
+
+const cloneDefaultContent = () => JSON.parse(JSON.stringify(defaultSiteContent));
+
+const loadSiteContent = () => {
+  try {
+    const saved = localStorage.getItem(CMS_STORAGE_KEY);
+    if (!saved) {
+      return cloneDefaultContent();
+    }
+    return { ...cloneDefaultContent(), ...JSON.parse(saved) };
+  } catch (_) {
+    return cloneDefaultContent();
+  }
+};
+
+const saveSiteContent = (content) => {
+  localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(content));
+};
+
+const setBulletList = (selector, items) => {
+  const list = document.querySelector(selector);
+  if (!list || !Array.isArray(items)) {
+    return;
+  }
+  list.innerHTML = items
+    .filter(Boolean)
+    .map((item) => `<li>${item}</li>`)
+    .join("");
+};
+
+const setText = (selector, value) => {
+  const node = document.querySelector(selector);
+  if (node && typeof value === "string") {
+    node.textContent = value;
+  }
+};
+
+const renderResultsCards = (matches) => {
+  const cards = document.querySelectorAll("[data-result-card]");
+  if (!cards.length || !Array.isArray(matches)) {
+    return;
+  }
+  cards.forEach((card, index) => {
+    const match = matches[index];
+    if (!match) {
+      card.hidden = true;
+      return;
+    }
+    card.hidden = false;
+    card.innerHTML = `
+      <div class="result-head">
+        <p class="card-label">${match.label || `Match ${index + 1}`}</p>
+        <span class="player-achievement">${match.achievement || ""}</span>
+      </div>
+      <h2>${match.title || "Match Result"}</h2>
+      <ul class="bullet-list">
+        <li>${match.scoreOne || ""}</li>
+        <li>${match.scoreTwo || ""}</li>
+      </ul>
+      <div class="performer-grid">
+        <div class="performer-chip"><strong>Top Batter</strong><span>${match.topBatter || ""}</span></div>
+        <div class="performer-chip"><strong>Top Bowler</strong><span>${match.topBowler || ""}</span></div>
+        <div class="performer-chip"><strong>Man of the Match</strong><span>${match.manOfMatch || ""}</span></div>
+      </div>
+    `;
+  });
+};
+
+const renderResultsHighlights = (highlights) => {
+  const cards = document.querySelectorAll("[data-highlight-card]");
+  if (!cards.length || !Array.isArray(highlights)) {
+    return;
+  }
+  cards.forEach((card, index) => {
+    const item = highlights[index];
+    if (!item) {
+      card.hidden = true;
+      return;
+    }
+    card.hidden = false;
+    card.innerHTML = `
+      <p class="card-label">${item.label || ""}</p>
+      <h3>${item.title || ""}</h3>
+      <ul class="bullet-list">
+        ${(item.points || []).filter(Boolean).map((point) => `<li>${point}</li>`).join("")}
+      </ul>
+    `;
+  });
+};
+
+const applySiteContent = (content) => {
+  setBulletList("#home-notices-list", content.home?.notices || []);
+  setBulletList("#home-news-list", content.home?.news || []);
+  setBulletList("#academy-training-list", [
+    `Morning: ${content.academy?.training?.morning || ""}`,
+    `Evening: ${content.academy?.training?.evening || ""}`,
+    content.academy?.training?.special || ""
+  ]);
+  setBulletList("#tournament-events-list", content.tournaments?.events || []);
+  setBulletList("#tournament-fixtures-list", content.tournaments?.fixtures || []);
+  setBulletList("#tournament-prizes-list", content.tournaments?.prizes || []);
+  setText("#tournament-countdown-title", content.tournaments?.countdownTitle || "");
+  const countdownGrid = document.querySelector("#tournament-countdown-grid");
+  if (countdownGrid && content.tournaments?.countdownDate) {
+    countdownGrid.setAttribute("data-target-date", content.tournaments.countdownDate);
+  }
+  const downloadMap = [
+    ["#download-rules-link", content.tournaments?.downloads?.rules],
+    ["#download-brochure-link", content.tournaments?.downloads?.brochure],
+    ["#download-fixtures-link", content.tournaments?.downloads?.fixtures],
+    ["#download-source-link", content.tournaments?.downloads?.source]
+  ];
+  downloadMap.forEach(([selector, url]) => {
+    const link = document.querySelector(selector);
+    if (link && url) {
+      link.href = url;
+    }
+  });
+  const liveCard = document.querySelector("#live-stream-card");
+  if (liveCard && content.live?.youtubeUrl) {
+    liveCard.dataset.youtubeLiveUrl = content.live.youtubeUrl;
+  }
+  setText("#live-stream-title", content.live?.title || "");
+  renderResultsCards(content.results?.matches || []);
+  renderResultsHighlights(content.results?.highlights || []);
+};
+
+const siteContent = loadSiteContent();
+applySiteContent(siteContent);
+
+const liveStreamCard = document.querySelector(".live-stream-card");
+const liveYoutubeFrame = document.querySelector("#live-youtube-frame");
+const liveYoutubeWatch = document.querySelector("#live-youtube-watch");
+const renderLiveEmbed = () => {
+  if (!liveStreamCard || !liveYoutubeFrame) {
+    return;
+  }
+
+  const liveUrl = liveStreamCard.dataset.youtubeLiveUrl || "";
+  const videoId = extractYouTubeVideoId(liveUrl);
+
+  if (videoId) {
+    liveStreamCard.classList.remove("live-stream-empty");
+    liveYoutubeFrame.hidden = false;
+    liveYoutubeFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0&modestbranding=1`;
+    if (liveYoutubeWatch) {
+      liveYoutubeWatch.hidden = false;
+      liveYoutubeWatch.href = `https://www.youtube.com/watch?v=${videoId}`;
+    }
+  } else {
+    liveStreamCard.classList.add("live-stream-empty");
+    liveYoutubeFrame.hidden = true;
+    if (liveYoutubeWatch) {
+      liveYoutubeWatch.hidden = true;
+    }
+  }
+};
+
+renderLiveEmbed();
+
+window.addEventListener("storage", (event) => {
+  if (event.key === CMS_STORAGE_KEY) {
+    applySiteContent(loadSiteContent());
+    renderLiveEmbed();
+  }
+});
+
+const adminLoginForm = document.querySelector("#admin-login-form");
+const adminDashboard = document.querySelector("#admin-dashboard");
+const adminAuthCard = document.querySelector("#admin-auth-card");
+const adminStatusNodes = document.querySelectorAll(".admin-status");
+const adminLogout = document.querySelector("#admin-logout");
+const adminContentForm = document.querySelector("#admin-content-form");
+const adminReset = document.querySelector("#admin-reset-defaults");
+
+const setAdminStatus = (message) => {
+  adminStatusNodes.forEach((node) => {
+    node.textContent = message;
+  });
+};
+
+const setAdminVisibility = (loggedIn) => {
+  if (adminAuthCard) {
+    adminAuthCard.hidden = loggedIn;
+  }
+  if (adminDashboard) {
+    adminDashboard.hidden = !loggedIn;
+  }
+};
+
+if (currentPage === "admin.html" && document.body?.dataset.adminMode !== "firebase") {
+  const isLoggedIn = localStorage.getItem(ADMIN_SESSION_KEY) === "true";
+  setAdminVisibility(isLoggedIn);
+
+  const fillAdminForm = (content) => {
+    const setValue = (id, value) => {
+      const node = document.querySelector(id);
+      if (node) {
+        node.value = value || "";
+      }
+    };
+
+    setValue("#admin-home-notices", (content.home?.notices || []).join("\n"));
+    setValue("#admin-home-news", (content.home?.news || []).join("\n"));
+    setValue("#admin-academy-morning", content.academy?.training?.morning);
+    setValue("#admin-academy-evening", content.academy?.training?.evening);
+    setValue("#admin-academy-special", content.academy?.training?.special);
+    setValue("#admin-tournament-events", (content.tournaments?.events || []).join("\n"));
+    setValue("#admin-tournament-fixtures", (content.tournaments?.fixtures || []).join("\n"));
+    setValue("#admin-tournament-prizes", (content.tournaments?.prizes || []).join("\n"));
+    setValue("#admin-countdown-title", content.tournaments?.countdownTitle);
+    setValue("#admin-countdown-date", content.tournaments?.countdownDate);
+    setValue("#admin-download-rules", content.tournaments?.downloads?.rules);
+    setValue("#admin-download-brochure", content.tournaments?.downloads?.brochure);
+    setValue("#admin-download-fixtures", content.tournaments?.downloads?.fixtures);
+    setValue("#admin-download-source", content.tournaments?.downloads?.source);
+    setValue("#admin-live-title", content.live?.title);
+    setValue("#admin-live-url", content.live?.youtubeUrl);
+
+    (content.results?.matches || []).forEach((match, index) => {
+      setValue(`#result-${index}-label`, match.label);
+      setValue(`#result-${index}-achievement`, match.achievement);
+      setValue(`#result-${index}-title`, match.title);
+      setValue(`#result-${index}-score1`, match.scoreOne);
+      setValue(`#result-${index}-score2`, match.scoreTwo);
+      setValue(`#result-${index}-batter`, match.topBatter);
+      setValue(`#result-${index}-bowler`, match.topBowler);
+      setValue(`#result-${index}-mom`, match.manOfMatch);
+    });
+
+    (content.results?.highlights || []).forEach((item, index) => {
+      setValue(`#highlight-${index}-label`, item.label);
+      setValue(`#highlight-${index}-title`, item.title);
+      setValue(`#highlight-${index}-points`, (item.points || []).join("\n"));
+    });
+  };
+
+  fillAdminForm(siteContent);
+
+  if (adminLoginForm) {
+    adminLoginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const username = document.querySelector("#admin-username")?.value.trim();
+      const password = document.querySelector("#admin-password")?.value.trim();
+      if (username === ADMIN_DEFAULTS.username && password === ADMIN_DEFAULTS.password) {
+        localStorage.setItem(ADMIN_SESSION_KEY, "true");
+        setAdminVisibility(true);
+        setAdminStatus("Login successful.");
+      } else {
+        setAdminStatus("Invalid user ID or password.");
+      }
+    });
+  }
+
+  if (adminLogout) {
+    adminLogout.addEventListener("click", () => {
+      localStorage.removeItem(ADMIN_SESSION_KEY);
+      setAdminVisibility(false);
+      setAdminStatus("Logged out successfully.");
+    });
+  }
+
+  if (adminContentForm) {
+    adminContentForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const lines = (id) =>
+        (document.querySelector(id)?.value || "")
+          .split("\n")
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+      const value = (id) => (document.querySelector(id)?.value || "").trim();
+
+      const updatedContent = {
+        home: {
+          notices: lines("#admin-home-notices"),
+          news: lines("#admin-home-news")
+        },
+        academy: {
+          training: {
+            morning: value("#admin-academy-morning"),
+            evening: value("#admin-academy-evening"),
+            special: value("#admin-academy-special")
+          }
+        },
+        tournaments: {
+          events: lines("#admin-tournament-events"),
+          fixtures: lines("#admin-tournament-fixtures"),
+          prizes: lines("#admin-tournament-prizes"),
+          countdownTitle: value("#admin-countdown-title"),
+          countdownDate: value("#admin-countdown-date"),
+          downloads: {
+            rules: value("#admin-download-rules"),
+            brochure: value("#admin-download-brochure"),
+            fixtures: value("#admin-download-fixtures"),
+            source: value("#admin-download-source")
+          }
+        },
+        live: {
+          title: value("#admin-live-title"),
+          youtubeUrl: value("#admin-live-url")
+        },
+        results: {
+          matches: [0, 1, 2].map((index) => ({
+            label: value(`#result-${index}-label`),
+            achievement: value(`#result-${index}-achievement`),
+            title: value(`#result-${index}-title`),
+            scoreOne: value(`#result-${index}-score1`),
+            scoreTwo: value(`#result-${index}-score2`),
+            topBatter: value(`#result-${index}-batter`),
+            topBowler: value(`#result-${index}-bowler`),
+            manOfMatch: value(`#result-${index}-mom`)
+          })),
+          highlights: [0, 1].map((index) => ({
+            label: value(`#highlight-${index}-label`),
+            title: value(`#highlight-${index}-title`),
+            points: lines(`#highlight-${index}-points`)
+          }))
+        }
+      };
+
+      saveSiteContent(updatedContent);
+      setAdminStatus("Content saved successfully. Reload the public pages to see updates.");
+    });
+  }
+
+  if (adminReset) {
+    adminReset.addEventListener("click", () => {
+      const defaults = cloneDefaultContent();
+      saveSiteContent(defaults);
+      fillAdminForm(defaults);
+      setAdminStatus("Default content restored successfully.");
+    });
+  }
+}
+
+const initBackgroundAtmosphere = () => {
+  if (!atmosphere || atmosphere.childElementCount) {
+    return;
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
   const motifs = [
     { name: "bat", min: 36, max: 56 },
     { name: "cricket-ball", min: 24, max: 44 },
@@ -143,7 +652,9 @@ if (atmosphere) {
     { name: "fitness", min: 30, max: 50 }
   ];
 
-  for (let index = 0; index < 20; index += 1) {
+  const totalItems = window.innerWidth < 768 ? 8 : 12;
+
+  for (let index = 0; index < totalItems; index += 1) {
     const motif = motifs[index % motifs.length];
     const size = motif.min + Math.random() * (motif.max - motif.min);
     const item = document.createElement("div");
@@ -158,6 +669,12 @@ if (atmosphere) {
     item.style.animationDelay = `${Math.random() * -10}s`;
     atmosphere.appendChild(item);
   }
+};
+
+if ("requestIdleCallback" in window) {
+  window.requestIdleCallback(initBackgroundAtmosphere, { timeout: 1200 });
+} else {
+  window.addEventListener("load", initBackgroundAtmosphere, { once: true });
 }
 
 const getSuccessOverlay = () => {
@@ -198,10 +715,76 @@ const getSuccessOverlay = () => {
   return overlay;
 };
 
+const getFieldLabel = (field) => {
+  const label = field.closest("label");
+  if (!label) {
+    return field.name || "Field";
+  }
+  const clonedLabel = label.cloneNode(true);
+  clonedLabel.querySelectorAll("input, select, textarea, span, a").forEach((node) => node.remove());
+  const labelText = clonedLabel.textContent.replace(/\s+/g, " ").trim();
+  return labelText || field.name || "Field";
+};
+
+const getFieldValue = (field) => {
+  if (field.type === "file") {
+    const fileCount = field.files ? field.files.length : 0;
+    if (!fileCount) {
+      return "";
+    }
+    return fileCount === 1 ? "Selected. Please attach this file manually in WhatsApp." : `${fileCount} files selected. Please attach them manually in WhatsApp.`;
+  }
+
+  if (field.tagName === "SELECT") {
+    return field.options[field.selectedIndex]?.text?.trim() || "";
+  }
+
+  if (field.type === "checkbox" || field.type === "radio") {
+    return field.checked ? "Yes" : "";
+  }
+
+  return field.value.trim();
+};
+
+const buildWhatsAppFormMessage = (form) => {
+  const formName = form.dataset.formName || "Form";
+  const formType = form.dataset.whatsappSubmit || "general";
+  const introMap = {
+    admission: `Hello Vedant Cricket Club, a new ${formName.toLowerCase()} has been submitted. Details are below:`,
+    tournament: `Hello Vedant Cricket Club, a new ${formName.toLowerCase()} has been submitted. Team details are below:`,
+    general: `Hello Vedant Cricket Club, a new ${formName.toLowerCase()} has been submitted. Details are below:`
+  };
+
+  const lines = [introMap[formType] || introMap.general, ""];
+
+  Array.from(form.elements).forEach((field) => {
+    if (!(field instanceof HTMLElement) || !field.name || field.disabled) {
+      return;
+    }
+    const value = getFieldValue(field);
+    if (!value) {
+      return;
+    }
+    lines.push(`${getFieldLabel(field)}: ${value}`);
+  });
+
+  return lines.join("\n");
+};
+
 document.querySelectorAll(".smart-form[data-form-name]").forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const status = form.nextElementSibling;
+    const whatsappNumber = form.dataset.whatsappNumber;
+    if (whatsappNumber) {
+      const message = buildWhatsAppFormMessage(form);
+      if (status) {
+        status.textContent = "Opening WhatsApp with your filled details. If you selected a file, attach it there before sending.";
+      }
+
+      window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      return;
+    }
     const name = form.dataset.formName || "Form";
     const overlay = getSuccessOverlay();
     const title = form.dataset.successTitle || `${name} Submitted`;
@@ -334,129 +917,6 @@ if (waTemplateType && waName && waPhone && waPreview && waSendLink) {
   waName.addEventListener("input", updateWhatsAppTemplate);
   waPhone.addEventListener("input", updateWhatsAppTemplate);
   updateWhatsAppTemplate();
-}
-
-const rankingList = document.querySelector("#ranking-list");
-const compareForm = document.querySelector("#player-compare-form");
-const compareOutput = document.querySelector("#compare-output");
-const playerASelect = document.querySelector("#player-a-select");
-const playerBSelect = document.querySelector("#player-b-select");
-
-const fallbackPlayers = [
-  { id: "aryan-singh", name: "Aryan Singh", role: "Top Order Batter", matches: 18, runs: 428, wickets: 3, strikeRate: 134.6, economy: 7.4, best: "86" },
-  { id: "shivam-yadav", name: "Shivam Yadav", role: "Fast Bowler", matches: 16, runs: 96, wickets: 24, strikeRate: 112.2, economy: 5.4, best: "4/18" },
-  { id: "r-khan", name: "R. Khan", role: "All-Rounder", matches: 15, runs: 276, wickets: 14, strikeRate: 128.1, economy: 6.2, best: "55 runs, 2 wickets" },
-  { id: "aditya-rai", name: "Aditya Rai", role: "Bowling All-Rounder", matches: 14, runs: 184, wickets: 17, strikeRate: 121.4, economy: 5.9, best: "4/19" },
-  { id: "rohan-gautam", name: "Rohan Gautam", role: "Middle Order Batter", matches: 17, runs: 309, wickets: 2, strikeRate: 129.8, economy: 7.8, best: "74" }
-];
-
-if (rankingList && compareForm && compareOutput && playerASelect && playerBSelect) {
-  const initPlayerTools = (players) => {
-    const scorePlayer = (player) => {
-      const runScore = player.runs * 0.25;
-      const wicketScore = player.wickets * 18;
-      const strikeScore = player.strikeRate * 1.5;
-      const economyBonus = Math.max(0, (8 - player.economy) * 16);
-      const matchFactor = player.matches * 2;
-      return runScore + wicketScore + strikeScore + economyBonus + matchFactor;
-    };
-
-    const ranked = [...players]
-      .map((player) => ({ ...player, score: scorePlayer(player) }))
-      .sort((a, b) => b.score - a.score);
-
-    rankingList.innerHTML = ranked
-      .map(
-        (player, index) => `
-            <div class="ranking-row">
-              <span>#${index + 1}</span>
-              <span>${player.name}</span>
-              <span>${player.role}</span>
-              <span>${player.score.toFixed(1)}</span>
-            </div>
-          `
-      )
-      .join("");
-
-    players.forEach((player) => {
-      const optionA = document.createElement("option");
-      optionA.value = player.id;
-      optionA.textContent = `${player.name} (${player.role})`;
-      playerASelect.appendChild(optionA);
-
-      const optionB = document.createElement("option");
-      optionB.value = player.id;
-      optionB.textContent = `${player.name} (${player.role})`;
-      playerBSelect.appendChild(optionB);
-    });
-
-    if (players.length > 1) {
-      playerASelect.value = players[0].id;
-      playerBSelect.value = players[1].id;
-    }
-
-    const renderComparison = () => {
-      const playerA = players.find((player) => player.id === playerASelect.value);
-      const playerB = players.find((player) => player.id === playerBSelect.value);
-      const status = compareForm.nextElementSibling;
-
-      if (!playerA || !playerB) {
-        return;
-      }
-
-      if (playerA.id === playerB.id) {
-        if (status) {
-          status.textContent = "Please select two different players.";
-        }
-        return;
-      }
-
-      if (status) {
-        status.textContent = "Comparison generated.";
-      }
-
-      compareOutput.innerHTML = `
-          <p class="card-label">Live Comparison</p>
-          <h3>${playerA.name} vs ${playerB.name}</h3>
-          <div class="compare-grid">
-            <div class="compare-col">
-              <strong>${playerA.name}</strong>
-              <p>Matches: ${playerA.matches}</p>
-              <p>Runs: ${playerA.runs}</p>
-              <p>Wickets: ${playerA.wickets}</p>
-              <p>Strike Rate: ${playerA.strikeRate}</p>
-              <p>Economy: ${playerA.economy}</p>
-              <p>Best: ${playerA.best}</p>
-            </div>
-            <div class="compare-col">
-              <strong>${playerB.name}</strong>
-              <p>Matches: ${playerB.matches}</p>
-              <p>Runs: ${playerB.runs}</p>
-              <p>Wickets: ${playerB.wickets}</p>
-              <p>Strike Rate: ${playerB.strikeRate}</p>
-              <p>Economy: ${playerB.economy}</p>
-              <p>Best: ${playerB.best}</p>
-            </div>
-          </div>
-        `;
-    };
-
-    compareForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      renderComparison();
-    });
-
-    playerASelect.addEventListener("change", renderComparison);
-    playerBSelect.addEventListener("change", renderComparison);
-    renderComparison();
-  };
-
-  fetch("./data/players.json")
-    .then((response) => response.json())
-    .then((players) => initPlayerTools(players))
-    .catch(() => {
-      initPlayerTools(fallbackPlayers);
-    });
 }
 
 if ("serviceWorker" in navigator) {

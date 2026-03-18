@@ -2,13 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Vedant Cricket Club</title>
     <meta
       name="description"
       content="Vedant Cricket Club in Nizamudinpura, Bhiti-Mau. Cricket academy, tournaments, results, live updates, gallery, and contact information."
     />
     <meta name="keywords" content="Vedant Cricket Club Mau, Cricket Academy in Mau, Cricket Coaching Bhiti Mau, Tournament in Mau" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://vedantcricketclub.pages.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vedant Cricket Club" />
+    <meta property="og:title" content="Vedant Cricket Club | Cricket Academy and Tournaments in Mau" />
+    <meta property="og:description" content="Cricket academy training, tournaments, live matches, results, gallery, and contact information for Vedant Cricket Club in Bhiti-Mau." />
+    <meta property="og:url" content="https://vedantcricketclub.pages.dev/" />
+    <meta property="og:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vedant Cricket Club | Cricket Academy and Tournaments in Mau" />
+    <meta name="twitter:description" content="Cricket academy training, tournaments, live matches, results, gallery, and contact information for Vedant Cricket Club in Bhiti-Mau." />
+    <meta name="twitter:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
     <meta name="theme-color" content="#0b1630" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/png" href="favicon-logo.png" />
@@ -54,7 +66,6 @@
         <span class="brand-badge">VCC</span>
         <span>
           <strong>Vedant Cricket Club</strong>
-          <small>Nizamudinpura, Bhiti-Mau</small>
         </span>
       </a>
 
@@ -75,34 +86,50 @@
 
     <main class="page-shell">
       <section class="hero-simple home-hero">
-        <div class="hero-scene hero-video-shell">
-          <div class="hero-video-crop">
-            <video
-              class="hero-video-frame hero-local-video"
-              id="hero-local-video"
-              autoplay
-              muted
-              loop
-              playsinline
-              webkit-playsinline
-              preload="auto"
-              data-loop-start="1"
-              data-loop-end="12"
-            >
-              <source src="videoplayback.mp4" type="video/mp4" />
-            </video>
-          </div>
+        <div class="hero-video-crop">
+          <video
+            class="hero-video-frame hero-local-video"
+            id="hero-local-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            preload="metadata"
+            data-loop-start="1"
+            data-loop-end="12"
+          >
+            <source src="videoplayback.mp4" type="video/mp4" />
+          </video>
         </div>
         <div class="hero-copy">
           <p class="eyebrow">Admission Open</p>
           <h1>Modern Cricket Training With Tournament Energy</h1>
           <p>
             Vedant Cricket Club is a focused cricket academy and tournament platform built for
-            training, match preparation, results, and player growth.
+            training, match preparation, results, and player growth. Founder:
+            <span class="founder-highlight">Sundaram Dubey</span>
           </p>
           <div class="hero-actions">
             <a class="button primary" href="academy.html">Join Academy</a>
             <a class="button secondary" href="tournaments.html">View Tournaments</a>
+          </div>
+        </div>
+        <div class="hero-scene hero-portrait-shell">
+          <article class="hero-founder-card" id="home-founder-card">
+            <p class="card-label" id="home-founder-label">Founder Spotlight</p>
+            <h3 id="home-founder-name">Sundaram Dubey</h3>
+            <p id="home-founder-text">A disciplined cricket vision focused on training intensity, player confidence, and tournament-ready preparation.</p>
+          </article>
+          <div class="hero-portrait-frame">
+            <img
+              id="home-hero-image"
+              class="hero-portrait-image"
+              src="hero-founder.jpeg"
+              alt="Vedant Cricket Club featured portrait"
+              loading="eager"
+              decoding="async"
+            />
           </div>
         </div>
       </section>
@@ -112,8 +139,8 @@
           <p class="eyebrow">Why Vedant Cricket Club</p>
           <h2>A sharper, more professional cricket platform</h2>
           <p>
-            The home page now focuses only on the most important entry points while the detailed
-            information lives on dedicated pages.
+            Built for ambition, discipline, and real cricket growth, this platform brings academy
+            training, tournament energy, and player development into one focused experience.
           </p>
         </div>
         <div class="content-grid three">
@@ -173,7 +200,7 @@
           <article class="content-card">
             <p class="card-label">Notice Board</p>
             <h2>Latest notices</h2>
-            <ul class="bullet-list">
+            <ul class="bullet-list" id="home-notices-list">
               <li>New academy admission batch is currently open</li>
               <li>Junior Talent Cup entries close on 24 April 2026</li>
               <li>Sunday fitness assessment remains compulsory for the open group</li>
@@ -182,7 +209,7 @@
           <article class="content-card">
             <p class="card-label">Press Release / News</p>
             <h2>Official updates</h2>
-            <ul class="bullet-list">
+            <ul class="bullet-list" id="home-news-list">
               <li>Vedant Cricket Club announces Summer Cricket Championship 2026</li>
               <li>Structured coaching model attracts new academy admissions</li>
               <li>Top performers shortlisted for district-level opportunities</li>
@@ -258,6 +285,7 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script type="module" src="firebase-cms.js"></script>
   </body>
 </html>

@@ -1,19 +1,26 @@
-const CACHE_NAME = "vcc-static-v1";
+const CACHE_NAME = "vcc-static-v3";
 const ASSETS = [
   "./",
   "./index.html",
   "./academy.html",
-  "./players.html",
   "./tournaments.html",
   "./live.html",
   "./results.html",
   "./gallery.html",
   "./contact.html",
+  "./admission.html",
+  "./tournament-registration.html",
+  "./privacy-policy.html",
+  "./terms-and-conditions.html",
+  "./admin.html",
   "./styles.css",
   "./script.js",
+  "./firebase-cms.js",
+  "./firebase-config.js",
   "./manifest.webmanifest",
-  "./icons/icon-192.svg",
-  "./icons/icon-512.svg"
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./favicon-logo.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -34,6 +41,19 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") {
+    return;
+  }
+
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html")))
+    );
     return;
   }
 

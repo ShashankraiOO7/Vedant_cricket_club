@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b1630" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="favicon-logo.png" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <title>Admin | Vedant Cricket Club</title>
+    <meta name="description" content="Admin dashboard for Vedant Cricket Club website updates." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="canonical" href="https://vedantcricketclub.pages.dev/admin.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-page" data-admin-mode="firebase">
+    <div class="site-backdrop" aria-hidden="true"><div class="backdrop-glow glow-one"></div><div class="backdrop-glow glow-two"></div><div class="backdrop-grid"></div><div id="sports-atmosphere" class="sports-atmosphere"></div></div>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav">
+        <a href="index.html">Home</a><a href="academy.html">Academy</a><a href="tournaments.html">Tournaments</a><a href="live.html">Live</a><a href="results.html">Results</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+      </nav>
+    </header>
+    <main class="page-shell">
+      <section class="page-hero">
+        <p class="eyebrow">Admin Panel</p>
+        <h1>Update Website Content</h1>
+        <p>Use this page to update live video, timings, notices, tournament content, downloads, and results.</p>
+      </section>
+
+      <section class="content-card admin-auth-card" id="admin-auth-card">
+        <p class="card-label">Admin Login</p>
+        <h2>Enter admin email and password</h2>
+        <form class="smart-form" id="admin-login-form">
+          <div class="form-grid two-col">
+            <label>Admin Email<input id="admin-email" type="email" placeholder="Enter Firebase admin email" required /></label>
+            <label>Password<input id="admin-password" type="password" placeholder="Enter password" required /></label>
+          </div>
+          <button class="button primary" type="submit">Login to Dashboard</button>
+        </form>
+        <p class="form-status admin-status" aria-live="polite"></p>
+        <p class="form-status" id="firebase-help" hidden>Paste your Firebase project config into firebase-config.js and enable Email/Password sign-in in Firebase Authentication.</p>
+      </section>
+
+      <section class="admin-dashboard" id="admin-dashboard" hidden>
+        <div class="admin-toolbar">
+          <p class="card-label">Dashboard</p>
+          <div class="hero-actions">
+            <button class="button secondary" type="button" id="admin-reset-defaults">Reset to Default</button>
+            <button class="button subtle" type="button" id="admin-logout">Logout</button>
+          </div>
+        </div>
+
+        <form class="smart-form" id="admin-content-form">
+          <section class="content-card admin-section-card">
+            <p class="card-label">Home Hero Image</p>
+            <h2>Right Side Hero Photo</h2>
+            <label>Hero Right Image Link<input id="admin-home-hero-image" type="text" placeholder="hero-founder.jpeg or Google Drive image link" /></label>
+            <p class="form-status">Paste a local image path or public Google Drive image link to change the home hero photo.</p>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Founder Spotlight</p>
+            <h2>Hero Side Content</h2>
+            <div class="form-grid two-col">
+              <label>Spotlight Label<input id="admin-home-founder-label" type="text" placeholder="Founder Spotlight" /></label>
+              <label>Founder Name<input id="admin-home-founder-name" type="text" placeholder="Sundaram Dubey" /></label>
+            </div>
+            <label>Founder Text
+              <textarea id="admin-home-founder-text" rows="4" placeholder="Short founder spotlight text"></textarea>
+            </label>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Home Page</p>
+            <h2>Latest Updates</h2>
+            <div class="form-grid two-col">
+              <label>Notice Board
+                <textarea id="admin-home-notices" rows="6" placeholder="One notice per line"></textarea>
+              </label>
+              <label>Official Updates / News
+                <textarea id="admin-home-news" rows="6" placeholder="One update per line"></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Academy Updates</p>
+            <h2>Training Time</h2>
+            <div class="form-grid two-col">
+              <label>Morning Session<input id="admin-academy-morning" type="text" placeholder="Example: 5:30 AM - 8:00 AM" /></label>
+              <label>Evening Session<input id="admin-academy-evening" type="text" placeholder="Example: 4:00 PM - 7:00 PM" /></label>
+            </div>
+            <label>Special / Sunday Session<input id="admin-academy-special" type="text" placeholder="Example: Sunday: match simulation and assessment" /></label>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Academy Documents</p>
+            <h2>PDF Links</h2>
+            <div class="form-grid two-col">
+              <label>Admission Form Link<input id="admin-academy-download-form" type="text" placeholder="docs/admission-form.pdf or Google Drive link" /></label>
+              <label>Academy Brochure Link<input id="admin-academy-download-brochure" type="text" placeholder="docs/academy-brochure.pdf or Google Drive link" /></label>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Tournaments</p>
+            <h2>Events, Fixtures, and Prize Money</h2>
+            <div class="form-grid two-col">
+              <label>Upcoming Events
+                <textarea id="admin-tournament-events" rows="6" placeholder="One event per line"></textarea>
+              </label>
+              <label>Fixtures
+                <textarea id="admin-tournament-fixtures" rows="6" placeholder="One fixture per line"></textarea>
+              </label>
+            </div>
+            <label>Prize Money / Awards
+              <textarea id="admin-tournament-prizes" rows="5" placeholder="One prize item per line"></textarea>
+            </label>
+            <div class="form-grid two-col">
+              <label>Countdown Title<input id="admin-countdown-title" type="text" placeholder="Example: Summer Cricket Championship starts in" /></label>
+              <label>Countdown Date<input id="admin-countdown-date" type="text" placeholder="2026-04-12T08:00:00+05:30" /></label>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Tournament Downloads</p>
+            <h2>File Links</h2>
+            <div class="form-grid two-col">
+              <label>Rules PDF URL<input id="admin-download-rules" type="text" placeholder="docs/tournament-rules.pdf" /></label>
+              <label>Brochure PDF URL<input id="admin-download-brochure" type="text" placeholder="docs/tournament-brochure.pdf" /></label>
+              <label>Fixtures PDF URL<input id="admin-download-fixtures" type="text" placeholder="docs/fixtures-sheet.pdf" /></label>
+              <label>Registration Form URL<input id="admin-download-source" type="text" placeholder="docs/registration-form.pdf" /></label>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Live Match</p>
+            <h2>YouTube Live Video</h2>
+            <div class="form-grid two-col">
+              <label>Live Section Title<input id="admin-live-title" type="text" placeholder="Example: Watch Vedant Cricket Club Live" /></label>
+              <label>YouTube Live Link<input id="admin-live-url" type="text" placeholder="Paste YouTube live URL here" /></label>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Gallery</p>
+            <h2>Google Drive Image Links</h2>
+            <div class="admin-results-grid">
+              <div class="form-panel">
+                <p class="card-label">Gallery Item 1</p>
+                <label>Title<input id="gallery-0-title" type="text" /></label>
+                <label>Image URL<input id="gallery-0-image" type="text" placeholder="Google Drive direct image URL" /></label>
+                <label>Alt Text<input id="gallery-0-alt" type="text" /></label>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Gallery Item 2</p>
+                <label>Title<input id="gallery-1-title" type="text" /></label>
+                <label>Image URL<input id="gallery-1-image" type="text" placeholder="Google Drive direct image URL" /></label>
+                <label>Alt Text<input id="gallery-1-alt" type="text" /></label>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Gallery Item 3</p>
+                <label>Title<input id="gallery-2-title" type="text" /></label>
+                <label>Image URL<input id="gallery-2-image" type="text" placeholder="Google Drive direct image URL" /></label>
+                <label>Alt Text<input id="gallery-2-alt" type="text" /></label>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Gallery Item 4</p>
+                <label>Title<input id="gallery-3-title" type="text" /></label>
+                <label>Image URL<input id="gallery-3-image" type="text" placeholder="Google Drive direct image URL" /></label>
+                <label>Alt Text<input id="gallery-3-alt" type="text" /></label>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Gallery Item 5</p>
+                <label>Title<input id="gallery-4-title" type="text" /></label>
+                <label>Image URL<input id="gallery-4-image" type="text" placeholder="Google Drive direct image URL" /></label>
+                <label>Alt Text<input id="gallery-4-alt" type="text" /></label>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Gallery Item 6</p>
+                <label>Title<input id="gallery-5-title" type="text" /></label>
+                <label>Image URL<input id="gallery-5-image" type="text" placeholder="Google Drive direct image URL" /></label>
+                <label>Alt Text<input id="gallery-5-alt" type="text" /></label>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Results</p>
+            <h2>Match Results</h2>
+            <div class="admin-results-grid">
+              <div class="form-panel">
+                <p class="card-label">Result Card 1</p>
+                <div class="form-grid two-col">
+                  <label>Label<input id="result-0-label" type="text" /></label>
+                  <label>Winning Summary<input id="result-0-achievement" type="text" /></label>
+                  <label>Match Title<input id="result-0-title" type="text" /></label>
+                  <label>Score Line 1<input id="result-0-score1" type="text" /></label>
+                  <label>Score Line 2<input id="result-0-score2" type="text" /></label>
+                  <label>Top Batter<input id="result-0-batter" type="text" /></label>
+                  <label>Top Bowler<input id="result-0-bowler" type="text" /></label>
+                  <label>Man of the Match<input id="result-0-mom" type="text" /></label>
+                </div>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Result Card 2</p>
+                <div class="form-grid two-col">
+                  <label>Label<input id="result-1-label" type="text" /></label>
+                  <label>Winning Summary<input id="result-1-achievement" type="text" /></label>
+                  <label>Match Title<input id="result-1-title" type="text" /></label>
+                  <label>Score Line 1<input id="result-1-score1" type="text" /></label>
+                  <label>Score Line 2<input id="result-1-score2" type="text" /></label>
+                  <label>Top Batter<input id="result-1-batter" type="text" /></label>
+                  <label>Top Bowler<input id="result-1-bowler" type="text" /></label>
+                  <label>Man of the Match<input id="result-1-mom" type="text" /></label>
+                </div>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Result Card 3</p>
+                <div class="form-grid two-col">
+                  <label>Label<input id="result-2-label" type="text" /></label>
+                  <label>Winning Summary<input id="result-2-achievement" type="text" /></label>
+                  <label>Match Title<input id="result-2-title" type="text" /></label>
+                  <label>Score Line 1<input id="result-2-score1" type="text" /></label>
+                  <label>Score Line 2<input id="result-2-score2" type="text" /></label>
+                  <label>Top Batter<input id="result-2-batter" type="text" /></label>
+                  <label>Top Bowler<input id="result-2-bowler" type="text" /></label>
+                  <label>Man of the Match<input id="result-2-mom" type="text" /></label>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-card admin-section-card">
+            <p class="card-label">Results Highlights</p>
+            <h2>Top Performers Board</h2>
+            <div class="form-grid two-col">
+              <div class="form-panel">
+                <p class="card-label">Highlight Card 1</p>
+                <label>Label<input id="highlight-0-label" type="text" /></label>
+                <label>Title<input id="highlight-0-title" type="text" /></label>
+                <label>Points<textarea id="highlight-0-points" rows="4" placeholder="One point per line"></textarea></label>
+              </div>
+              <div class="form-panel">
+                <p class="card-label">Highlight Card 2</p>
+                <label>Label<input id="highlight-1-label" type="text" /></label>
+                <label>Title<input id="highlight-1-title" type="text" /></label>
+                <label>Points<textarea id="highlight-1-points" rows="4" placeholder="One point per line"></textarea></label>
+              </div>
+            </div>
+          </section>
+
+          <div class="hero-actions">
+            <button class="button primary" type="submit">Save All Website Content</button>
+          </div>
+        </form>
+        <p class="form-status admin-status" aria-live="polite"></p>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Vedant Cricket Club • Admin</p></footer>
+    <script src="script.js" defer></script>
+    <script type="module" src="firebase-cms.js"></script>
+  </body>
+</html>

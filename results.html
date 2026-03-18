@@ -2,12 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1630" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/png" href="favicon-logo.png" />
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
     <title>Results | Vedant Cricket Club</title>
+    <meta name="description" content="Check recent match results, score summaries, top performers, and standout players from Vedant Cricket Club competitions." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://vedantcricketclub.pages.dev/results.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vedant Cricket Club" />
+    <meta property="og:title" content="Results | Vedant Cricket Club" />
+    <meta property="og:description" content="Check recent match results, score summaries, top performers, and standout players from Vedant Cricket Club competitions." />
+    <meta property="og:url" content="https://vedantcricketclub.pages.dev/results.html" />
+    <meta property="og:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Results | Vedant Cricket Club" />
+    <meta name="twitter:description" content="Check recent match results, score summaries, top performers, and standout players from Vedant Cricket Club competitions." />
+    <meta name="twitter:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -21,7 +34,7 @@
       <div id="sports-atmosphere" class="sports-atmosphere"></div>
     </div>
     <header class="site-header">
-      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong><small>Nizamudinpura, Bhiti-Mau</small></span></a>
+      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong></span></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav">
         <a href="index.html">Home</a><a href="academy.html">Academy</a><a href="tournaments.html">Tournaments</a><a href="live.html">Live</a><a class="active" href="results.html">Results</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
@@ -33,8 +46,8 @@
         <h1>Recent match outcomes</h1>
         <p>A combined presentation of match results and top performers.</p>
       </section>
-      <section class="content-grid three">
-        <article class="content-card result-combo">
+      <section class="content-grid three" id="results-cards">
+        <article class="content-card result-combo" data-result-card="0">
           <div class="result-head">
             <p class="card-label">Match 1</p>
             <span class="player-achievement">VCC XI won by 27 runs</span>
@@ -50,7 +63,7 @@
             <div class="performer-chip"><strong>Man of the Match</strong><span>Aryan Singh</span></div>
           </div>
         </article>
-        <article class="content-card result-combo">
+        <article class="content-card result-combo" data-result-card="1">
           <div class="result-head">
             <p class="card-label">Match 2</p>
             <span class="player-achievement">VCC Juniors won by 5 wickets</span>
@@ -66,7 +79,7 @@
             <div class="performer-chip"><strong>Man of the Match</strong><span>Shivam Yadav</span></div>
           </div>
         </article>
-        <article class="content-card result-combo">
+        <article class="content-card result-combo" data-result-card="2">
           <div class="result-head">
             <p class="card-label">Match 3</p>
             <span class="player-achievement">Champion Club won by 12 runs</span>
@@ -89,8 +102,8 @@
           <h2>Combined season highlights</h2>
           <p>Quick snapshot of the players consistently delivering match-winning impact.</p>
         </div>
-        <div class="compact-grid">
-          <article class="info-card">
+        <div class="compact-grid" id="results-highlights">
+          <article class="info-card" data-highlight-card="0">
             <p class="card-label">Most Runs</p>
             <h3>Aryan Singh - 348</h3>
             <ul class="bullet-list">
@@ -99,7 +112,7 @@
               <li>Strike Rate: 143.2</li>
             </ul>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-highlight-card="1">
             <p class="card-label">Most Wickets</p>
             <h3>Aditya Rai - 17</h3>
             <ul class="bullet-list">
@@ -112,6 +125,7 @@
       </section>
     </main>
     <footer class="site-footer"><p>Vedant Cricket Club - Results</p></footer>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script type="module" src="firebase-cms.js"></script>
   </body>
 </html>

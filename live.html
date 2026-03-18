@@ -2,12 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1630" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/png" href="favicon-logo.png" />
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
     <title>Live | Vedant Cricket Club</title>
+    <meta name="description" content="Watch live cricket streams from Vedant Cricket Club directly on the official live page." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://vedantcricketclub.pages.dev/live.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vedant Cricket Club" />
+    <meta property="og:title" content="Live Matches | Vedant Cricket Club" />
+    <meta property="og:description" content="Watch live cricket streams from Vedant Cricket Club directly on the official live page." />
+    <meta property="og:url" content="https://vedantcricketclub.pages.dev/live.html" />
+    <meta property="og:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Live Matches | Vedant Cricket Club" />
+    <meta name="twitter:description" content="Watch live cricket streams from Vedant Cricket Club directly on the official live page." />
+    <meta name="twitter:image" content="https://vedantcricketclub.pages.dev/favicon-logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -16,46 +29,34 @@
   <body class="live-page">
     <div class="site-backdrop" aria-hidden="true"><div class="backdrop-glow glow-one"></div><div class="backdrop-glow glow-two"></div><div class="backdrop-grid"></div><div id="sports-atmosphere" class="sports-atmosphere"></div></div>
     <header class="site-header">
-      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong><small>Nizamudinpura, Bhiti-Mau</small></span></a>
+      <a class="brand" href="index.html"><span class="brand-badge">VCC</span><span><strong>Vedant Cricket Club</strong></span></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav">
         <a href="index.html">Home</a><a href="academy.html">Academy</a><a href="tournaments.html">Tournaments</a><a class="active" href="live.html">Live</a><a href="results.html">Results</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
       </nav>
     </header>
     <main class="page-shell">
-      <section class="page-hero"><p class="eyebrow">Live</p><h1>Current match updates</h1><p>A cleaner page for live score information and standout performers.</p></section>
-      <section class="content-grid two live-section">
-        <article class="content-card live-card">
-          <p class="card-label">Live Scoreboard</p>
-          <h2>VCC XI 148/4</h2>
-          <ul class="bullet-list">
-            <li>Target: 177</li>
-            <li>Current Pair: Aryan 54*, Rohan 18*</li>
-            <li>Required: 29 off 16</li>
-          </ul>
-        </article>
-        <article class="content-card live-card">
-          <p class="card-label">Top Performers</p>
-          <h2>Match impact</h2>
-          <ul class="bullet-list">
-            <li>Top Batter: Aryan Singh</li>
-            <li>Top Bowler: Shivam Yadav</li>
-            <li>Best All-Rounder: R. Khan</li>
-          </ul>
-        </article>
-      </section>
-      <section class="content-card live-section live-table-card">
-        <p class="card-label">Points Table</p>
-        <h2>Current standings</h2>
-        <div class="table-shell">
-          <div class="table-row heading"><span>Team</span><span>P</span><span>Pts</span></div>
-          <div class="table-row"><span>VCC XI</span><span>3</span><span>6</span></div>
-          <div class="table-row"><span>Rising Stars</span><span>3</span><span>4</span></div>
-          <div class="table-row"><span>Warrior Boys</span><span>3</span><span>2</span></div>
+      <section class="page-hero"><p class="eyebrow">Live</p><h1>Watch the live match here</h1><p>When Vedant Cricket Club goes live on YouTube, the match can be watched directly on this page.</p></section>
+      <section class="content-card live-section live-stream-card" data-youtube-live-url="https://www.youtube.com/watch?v=AUzzBuQdz_I" id="live-stream-card">
+        <p class="card-label">Live Match</p>
+        <h2 id="live-stream-title">Watch Vedant Cricket Club Live</h2>
+        <div class="live-embed-shell" id="live-embed-shell">
+          <iframe
+            id="live-youtube-frame"
+            title="Vedant Cricket Club Live Match"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+        <div class="hero-actions">
+          <a class="button primary" id="live-youtube-watch" href="https://www.youtube.com/watch?v=AUzzBuQdz_I" target="_blank" rel="noreferrer">Watch on YouTube</a>
         </div>
       </section>
     </main>
     <footer class="site-footer"><p>Vedant Cricket Club • Live</p></footer>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script type="module" src="firebase-cms.js"></script>
   </body>
 </html>
